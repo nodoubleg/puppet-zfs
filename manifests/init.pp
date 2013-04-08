@@ -25,5 +25,15 @@
 #
 class zfs {
 
+  if $operatingsystem in ['redhat', 'centos', 'scientific'] {
+    package { 'zfs-release':
+      ensure   => present,
+      provider => rpm,
+      source   => 'http://archive.zfsonlinux.org/epel/zfs-release-1-2.el6.noarch.rpm',
+    } ->
+    package { 'zfs':
+      ensure => present,
+    }
+  }
 
 }
