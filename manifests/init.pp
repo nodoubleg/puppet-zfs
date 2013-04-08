@@ -28,8 +28,8 @@ class zfs {
   if $::operatingsystem in ['RedHat', 'CentOS', 'Scientific'] {
 
     # We need kernel-headers for DKMS.
-    if !defined(Package['kernel-headers']) {
-      package { 'kernel-headers':
+    if !defined(Package['kernel-devel']) {
+      package { 'kernel-devel':
         ensure => present,
         before => Package['zfs'],
       }
