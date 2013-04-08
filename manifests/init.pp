@@ -31,6 +31,7 @@ class zfs {
     if !defined(Package['kernel-headers']) {
       package { 'kernel-headers':
         ensure => $::kernelrelease,
+        before => Package['zfs'],
       }
     }
 
