@@ -26,6 +26,14 @@
 class zfs {
 
   if $::operatingsystem in ['RedHat', 'CentOS', 'Scientific'] {
+
+    # We need kernel-headers for DKMS.
+    if !defined(Package['kernel-headers']) {
+      package { 'kernel-headers':
+        ensure => $::kernelrelease,
+      }
+    }
+
     package { 'zfs-release':
       ensure   => present,
       provider => rpm,
@@ -33,7 +41,12 @@ class zfs {
     } ->
     package { 'zfs':
       ensure => present,
+    } ~>
+    service { 'zfs':
+      ensure => running,
+      enable => true,
     }
+
   }
 
 }
