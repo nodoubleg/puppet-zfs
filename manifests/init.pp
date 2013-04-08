@@ -30,7 +30,7 @@ class zfs {
     # We need kernel-headers for DKMS.
     if !defined(Package['kernel-headers']) {
       package { 'kernel-headers':
-        ensure => $::kernelrelease,
+        ensure => present,
         before => Package['zfs'],
       }
     }
