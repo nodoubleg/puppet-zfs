@@ -25,7 +25,7 @@
 #
 class zfs {
 
-  if $operatingsystem in ['redhat', 'centos', 'scientific'] {
+  if $::operatingsystem in ['RedHat', 'CentOS', 'Scientific'] {
     package { 'zfs-release':
       ensure   => present,
       provider => rpm,
