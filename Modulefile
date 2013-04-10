@@ -7,4 +7,4 @@ summary 'ZFS Puppet module'
 description 'This module installs ZFS from http://zfsonlinux.org/ on Linux hosts. It does not manage pools, just the kernel-level support.'
 project_page 'http://forge.ircam.fr/p/puppet-module-base-zfs/'
 
-dependency 'nono/dkms', '>= 0.0.1'
+dependency 'nono/dkms', '>= 0.0.2'
