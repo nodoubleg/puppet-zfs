@@ -1,5 +1,5 @@
 name    'nono-zfs'
-version '0.0.2'
+version '0.1.0'
 source 'git://forge-git.ircam.fr/puppet-module-base-zfs.git'
 author 'nono'
 license 'GPLv3'
