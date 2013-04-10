@@ -36,10 +36,12 @@ class zfs {
     } ->
     package { 'zfs':
       ensure => present,
+      notify => Class['dkms'],
     } ~>
     service { 'zfs':
-      ensure => running,
-      enable => true,
+      ensure    => running,
+      enable    => true,
+      subscribe => Class['dkms'],
     }
 
   }
