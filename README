@@ -12,9 +12,9 @@ Contact
 -------
 
 Arnaud Gomes-do-Vale <Arnaud.Gomes@ircam.fr>
+Greg Mason <gmason@msu.edu> for Ubuntu port
 
 Support
 -------
 
-Please log tickets and issues at our [Projects site](http://forge.ircam.fr/p/puppet-module-base-zfs/)
-
+Please log tickets and issues at our [Projects site](https://git.phd.msu.edu/gmason/puppet-zfs/issues)

@@ -27,7 +27,8 @@ class zfs {
 
   include dkms
 
-  if $::operatingsystem in ['RedHat', 'CentOS', 'Scientific'] {
+  case $::operatingsystem {
+    'RedHat', 'CentOS', 'Scientific': {
 
     package { 'zfs-release':
       ensure   => present,
@@ -46,4 +47,27 @@ class zfs {
 
   }
 
+  'Ubuntu': {
+    include apt
+    include dkms
+    apt::ppa { 'ppa:zfs-native/stable': }
+    package { ['python-software-properties', 'bison', 'flex', 'libelf-dev', 'zlib1g-dev', 'libc6-dev', 'libdwarf-dev', 'binutils-dev']:
+      ensure  => installed,
+    } ~>
+    package { 'ubuntu-zfs':
+      ensure => present,
+      notify => Class['dkms'],
+      require => Apt::Ppa ['ppa:zfs-native/stable'],
+    }
+    # We explicitly run dkms to build the ZFS modules for the currently-running
+    # kernel. Otherwise ZFS won't work until an apt-get upgrade.
+    exec { 'zfs_dkms':
+      require => Class['dkms'],
+      command => '/etc/kernel/postinst.d/dkms',
+      creates => "/lib/modules/${kernelrelease}/updates/dkms/zfs.ko"
+    }
+
+  }
+
+}
 }
