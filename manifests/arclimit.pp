@@ -22,7 +22,9 @@ class zfs::arclimit {
 
 
   file { '/etc/modprobe.d/zfs.conf':
-    content => "options zfs zfs_arc_max=$arcsize",
+    # On large systems, min can default to quite large, overriding max.
+    content => "options zfs zfs_arc_max=$arcsize
+options zfs zfs_arc_min=$arcsize",
     mode    => 644,
     owner   => 'root',
     group   => 'root',
