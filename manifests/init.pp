@@ -14,7 +14,7 @@
 #
 # === Examples
 #
-#  class { zfs: 
+#  class { zfs:
 #    arcpercent => 25,
 #  }
 #
@@ -24,7 +24,7 @@
 #
 # === Copyright
 #
-# Copyright 2013 Michigan State University Board of Trustees
+# Copyright 2014 Michigan State University Board of Trustees
 # Copyright 2013 Arnaud Gomes-do-Vale
 #
 class zfs ( $arcpercent = '25', $arcsize_mb = '0' ) {
@@ -39,7 +39,9 @@ class zfs ( $arcpercent = '25', $arcsize_mb = '0' ) {
         package { 'zfs-release':
           ensure   => present,
           provider => rpm,
-          source   => 'http://archive.zfsonlinux.org/epel/zfs-release-1-2.el6.noarch.rpm',
+          # different URLs are given for different versions of EL.
+          # See http://zfsonlinux.org/epel.html for more info.
+          source   => "http://archive.zfsonlinux.org/epel/zfs-release.el${::operatingsystemmajrelease}.noarch.rpm",
         } ->
         package { 'zfs':
           ensure => present,
@@ -61,17 +63,20 @@ class zfs ( $arcpercent = '25', $arcsize_mb = '0' ) {
         ensure  => installed,
       } ~>
       package { 'ubuntu-zfs':
-        ensure => present,
-        notify => Class['dkms'],
+        ensure  => present,
+        notify  => Class['dkms'],
         require => Apt::Ppa ['ppa:zfs-native/stable'],
       }
-      # We explicitly run dkms to build the ZFS modules for the currently-running
-      # kernel. Otherwise ZFS won't work until an apt-get upgrade.
+      # We explicitly run dkms to build the ZFS modules for the currently
+      # running kernel. Otherwise ZFS won't work until an apt-get upgrade.
       exec { 'zfs_dkms':
         require => Class['dkms'],
         command => '/etc/kernel/postinst.d/dkms',
-        creates => "/lib/modules/${kernelrelease}/updates/dkms/zfs.ko"
+        creates => "/lib/modules/${::kernelrelease}/updates/dkms/zfs.ko"
       }
+    }
+    default: {
+      notify("${::operatingsystem} is not supported by the ZFS module")
     }
   }
 }
