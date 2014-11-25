@@ -3,6 +3,8 @@
 # This module installs ZFS from http://zfsonlinux.org/ on Linux hosts. It
 # does not manage pools, just the kernel-level support.
 #
+# RHEL/CentOS/SL 7 support is incomplete at the moment.
+#
 # === Parameters
 #
 # None.
@@ -29,7 +31,7 @@
 #
 class zfs ( $arcpercent = '25', $arcsize_mb = '0' ) {
 
-  include dkms
+# include dkms
   # comment out the following include to not manage the size of the ARC.
   include zfs::arclimit
 
@@ -45,13 +47,11 @@ class zfs ( $arcpercent = '25', $arcsize_mb = '0' ) {
         } ->
         package { 'zfs':
           ensure => present,
-          notify => Class['dkms'],
         } ~>
         service { 'zfs':
-          ensure    => running,
-          enable    => true,
-          subscribe => Class['dkms'],
-          require   => File['/etc/modprobe.d/zfs.conf']
+          ensure  => running,
+          enable  => true,
+          require => File['/etc/modprobe.d/zfs.conf']
         }
       }
 
