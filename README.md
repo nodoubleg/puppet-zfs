@@ -28,4 +28,4 @@ original author: Arnaud Gomes-do-Vale <Arnaud.Gomes@ircam.fr>
 Support
 -------
 
-Please log issues at our [Projects site](https://gitlab.msu.edu/gmason/puppet-zfs/issues)
+Please log issues at our [Projects site](https://gitlab.msu.edu/gmason/puppet-zfs/issues) or open an [Issue on GitHub](https://github.com/nodoubleg/puppet-zfs/issues)
